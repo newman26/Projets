@@ -2,6 +2,7 @@ package fr.adaming.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,10 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="formations")
+@Table(name = "formations")
 public class Formation {
 
 	@Id
@@ -27,22 +29,25 @@ public class Formation {
 	private String niveau;
 	private String description;
 
+	@Temporal(TemporalType.DATE)
 	private Date date_creation;
+	
+	@Temporal(TemporalType.DATE)
 	private Date date_formation;
 
+	@Temporal(TemporalType.TIME)
 	private Date heure_formation;
 
 	private int duree;
 
 	@OneToMany(mappedBy = "formation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Assister> formationAssits;
+	private Set<Assister> formationAssits;
 
 	@OneToMany(mappedBy = "formation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Enseigner> formationEnseigns;
+	private Set<Enseigner> formationEnseigns;
 
-	
-	@ManyToMany(mappedBy="formations")
-	private List<Module> modules;
+	@ManyToMany(mappedBy = "formations")
+	private Set<Module> modules;
 
 	public Formation() {
 		super();
@@ -137,27 +142,27 @@ public class Formation {
 		this.duree = duree;
 	}
 
-	public List<Assister> getFormationAssits() {
+	public Set<Assister> getFormationAssits() {
 		return formationAssits;
 	}
 
-	public void setFormationAssits(List<Assister> formationAssits) {
+	public void setFormationAssits(Set<Assister> formationAssits) {
 		this.formationAssits = formationAssits;
 	}
 
-	public List<Enseigner> getFormationEnseigns() {
+	public Set<Enseigner> getFormationEnseigns() {
 		return formationEnseigns;
 	}
 
-	public void setFormationEnseigns(List<Enseigner> formationEnseigns) {
+	public void setFormationEnseigns(Set<Enseigner> formationEnseigns) {
 		this.formationEnseigns = formationEnseigns;
 	}
 
-	public List<Module> getModules() {
+	public Set<Module> getModules() {
 		return modules;
 	}
 
-	public void setModules(List<Module> modules) {
+	public void setModules(Set<Module> modules) {
 		this.modules = modules;
 	}
 

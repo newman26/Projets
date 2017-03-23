@@ -2,16 +2,29 @@ package fr.adaming.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 // pour l'heritage 
-@MappedSuperclass
+@Entity
+@Table(name = "utilisateurs")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)// Pour le mapping de l'héritage
+@DiscriminatorColumn(name = "status")// Pour créer une colonne pour la distrinction des classes mère et filles
+//@DiscriminatorValue(value="Emp")// La valeur écrite dans la colonne "fonction" pour les employés
+
 public abstract class Utilisateur {
 
 	// ********* les attributs
@@ -23,13 +36,15 @@ public abstract class Utilisateur {
 	protected String prenom;
 	protected String pseudo;
 	protected String mot_pass;
+	
+	@Temporal(TemporalType.DATE)
 	protected Date date_nais;
 	protected String email;
 	protected int tel;
 	protected String pays;
 
 	@ManyToMany(mappedBy="listeUtilisateurs")
-	protected List<Reclamation> reclamations;
+	protected Set<Reclamation> reclamations;
 
 	// ********* les constructeurs
 	public Utilisateur() {
@@ -138,11 +153,11 @@ public abstract class Utilisateur {
 
 
 
-	public List<Reclamation> getReclamations() {
+	public Set<Reclamation> getReclamations() {
 		return reclamations;
 	}
 
-	public void setReclamations(List<Reclamation> reclamations) {
+	public void setReclamations(Set<Reclamation> reclamations) {
 		this.reclamations = reclamations;
 	}
 

@@ -1,6 +1,7 @@
 package fr.adaming.model;
 
-import java.util.List;
+
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,9 +28,9 @@ public class Reclamation {
 	private String msg_reclam;
 	private String rep_reclam;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "utilisateur_reclamation", joinColumns = @JoinColumn(name = "id_u"), inverseJoinColumns = @JoinColumn(name = "id_rec"))
-	private List<Utilisateur> listeUtilisateurs;
+	private Set<Utilisateur> listeUtilisateurs;
 
 	public Reclamation() {
 		super();
@@ -82,11 +83,11 @@ public class Reclamation {
 		this.rep_reclam = rep_reclam;
 	}
 
-	public List<Utilisateur> getListeUtilisateurs() {
+	public Set<Utilisateur> getListeUtilisateurs() {
 		return listeUtilisateurs;
 	}
 
-	public void setListeUtilisateurs(List<Utilisateur> listeUtilisateurs) {
+	public void setListeUtilisateurs(Set<Utilisateur> listeUtilisateurs) {
 		this.listeUtilisateurs = listeUtilisateurs;
 	}
 

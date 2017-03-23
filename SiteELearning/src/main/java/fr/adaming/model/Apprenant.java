@@ -1,9 +1,11 @@
 package fr.adaming.model;
 
 import java.util.Date;
-import java.util.List;
+
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -11,7 +13,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="apprenants")
+@DiscriminatorValue(value="AP")
 public class Apprenant extends Utilisateur {
 
 	private String niveau_etude;
@@ -19,7 +21,7 @@ public class Apprenant extends Utilisateur {
 	
 	
 	@OneToMany(mappedBy = "apprenant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Assister> formationsAssit;
+	private Set<Assister> formationsAssit;
 
 	public Apprenant() {
 		super();
@@ -55,11 +57,11 @@ public class Apprenant extends Utilisateur {
 		this.diplome = diplome;
 	}
 
-	public List<Assister> getFormationsAssit() {
+	public Set<Assister> getFormationsAssit() {
 		return formationsAssit;
 	}
 
-	public void setFormationsAssit(List<Assister> formationsAssit) {
+	public void setFormationsAssit(Set<Assister> formationsAssit) {
 		this.formationsAssit = formationsAssit;
 	}
 
